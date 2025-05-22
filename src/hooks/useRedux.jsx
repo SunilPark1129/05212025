@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { store } from "../store/store";
 
-export function useSelector(reducer) {
+export function useSelector(selector) {
   const [selectedState, setSelectedState] = useState(() =>
-    reducer(store.getState())
+    selector(store.getState())
   );
 
   useEffect(() => {
     const unsubscribe = store.subscribe(() => {
-      const newState = reducer(store.getState());
+      const newState = selector(store.getState());
       setSelectedState(newState);
     });
 
-    return unsubscribe; // cleanup
-  }, [reducer]);
+    // Whenever unmounted selector is changing -> cleanup
+    return unsubscribe;
+  }, [selector]);
 
   return selectedState;
 }
