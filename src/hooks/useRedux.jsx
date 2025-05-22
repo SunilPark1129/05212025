@@ -12,7 +12,7 @@ export function useSelector(selector) {
       setSelectedState(newState);
     });
 
-    // Whenever unmounted selector is changing -> cleanup
+    // selector is changing -> cleanup
     return unsubscribe;
   }, [selector]);
 
