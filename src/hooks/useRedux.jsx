@@ -2,21 +2,19 @@ import React, { useEffect, useState } from "react";
 import { store } from "../store/store";
 
 export function useSelector(selector) {
-  const [selectedState, setSelectedState] = useState(() =>
-    selector(store.getState())
-  );
+  let state = selector(store.getState());
+  const [_, forceRender] = useState(() => selector(store.getState()));
 
   useEffect(() => {
     const unsubscribe = store.subscribe(() => {
-      const newState = selector(store.getState());
-      setSelectedState(newState);
+      forceRender({});
     });
 
     // selector is changing -> cleanup
     return unsubscribe;
   }, [selector]);
 
-  return selectedState;
+  return state;
 }
 
 export function useDispatch() {
