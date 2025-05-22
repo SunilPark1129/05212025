@@ -15,6 +15,11 @@ function CarApp() {
           >
             SELL
           </button>
+          <button
+            onClick={() => dispatch({ type: "ADD", payload: { id: item.id } })}
+          >
+            ADD
+          </button>
         </div>
       ))}
     </div>

@@ -18,11 +18,14 @@ const initialState = [
 
 const carsReducer = (state = initialState, { type, payload }) => {
   switch (type) {
-    case "SELL": {
+    case "SELL":
       return state.map((car) =>
         car.id === payload.id ? { ...car, quantity: car.quantity - 1 } : car
       );
-    }
+    case "ADD":
+      return state.map((car) =>
+        car.id === payload.id ? { ...car, quantity: car.quantity + 1 } : car
+      );
     default:
       return state;
   }
